@@ -1,0 +1,95 @@
+{%- set args = "" %}
+{%- set args = args ~ " -p " ~ instance.port -%}
+{%- set args = args + " -w " + instance.complete -%}
+{%- set args = args + " -u " + instance.user -%}
+
+{%- if instance.has_key('allowedNets') -%}
+{%- set args = args + " -a \"" + instance.allowedNets|join(' ') + "\"" %}
+{%- endif -%}
+
+{%- if instance.has_key('blocklist') -%}
+{%- set args = args + " -b " + instance.blocklist %}
+{%- endif -%}
+
+{%- if instance.has_key('watch') -%}
+{%- set args = args + " -c " + instance.watch %}
+{%- endif -%}
+
+{%- if instance.has_key('configdir') -%}
+{%- set args = args + " -g " + instance.configdir %}
+{%- endif -%}
+
+{%- if instance.has_key('requireencryption') -%}
+{%- set args = args + " -er" %}
+{%- endif -%}
+
+{%- if instance.has_key('perferencryption') -%}
+{%- set args = args + " -ep" %}
+{%- endif -%}
+
+{%- if instance.has_key('tolerateencryption') -%}
+{%- set args = args + " -et" %}
+{%- endif -%}
+
+{%- if instance.has_key('globalseedratio') -%}
+{%- set args = args + " -gsr " + instance.globalseedratio %}
+{%- endif -%}
+
+{%- if instance.has_key('bind_address_ipv4') -%}
+{%- set args = args + " -i " + instance.bind_address_ipv4 %}
+{%- endif -%}
+
+{%- if instance.has_key('bind_address_ipv6') -%}
+{%- set args = args + " -I " + instance.bind_address_ipv6 %}
+{%- endif -%}
+
+{%- if instance.has_key('upnp') -%}
+{%- if instance.upnp == 'on' -%}
+{%- set args = args + " -m" -%}
+{%- else -%}
+{%- set args = args + " -M" -%}
+{%- endif -%}
+{%- endif -%}
+
+{%- if instance.has_key('dht') -%}
+{%- if instance.dht == 'on' -%}
+{%- set args = args + " -o" %}
+{%- else -%}
+{%- set args = args + " -O" %}
+{%- endif -%}
+{%- endif -%}
+
+{%- if instance.has_key('utp') -%}
+{%- if instance.utp == True -%}
+{%- set args = args + " --utp" %}
+{%- else -%}
+{%- set args = args + " --no-utp" %}
+{%- endif -%}
+{%- endif -%}
+
+{%- if instance.has_key('requireauth') -%}
+{%- if instance.requireauth == True -%}
+{%- set args = args + " -t" -%}
+{%- else -%}
+{%- set args = args + " -T" -%}
+{%- endif -%}
+{%- endif -%}
+
+{%- if instance.has_key('username') -%}
+{%- set args = args + " -u " + instance.username -%}
+{%- endif -%}
+
+{%- if instance.has_key('password') -%}
+{%- set args = args + " -v " + instance.password -%}
+{%- endif -%}
+
+{%- if instance.has_key('peerport') -%}
+{%- set args = args ~ " -P " ~ instance.peerport -%}
+{%- endif -%}
+
+{%- if instance.has_key('incomplete') -%}
+{%- set args =args +  " --incomplete-dir " + instance.incomplete -%}
+{%- else -%}
+{%- set args = args + " --no-incomplete-dir" -%}
+{% endif %}
+        ExecStart=/usr/bin/transmission-daemon -f {{ args }}

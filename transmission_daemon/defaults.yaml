@@ -1,0 +1,16 @@
+{% load_yaml as rawmap %}
+RedHat:
+  pkgs:
+    - transmission-daemon
+  service:
+    state: running
+  config:
+    defaults_path: {% if salt['grains.get']('osmajorrelease') == '7' %}/etc/systemd/system{% else %}/etc/sysconfig{% endif %}
+Fedora:
+  pkgs:
+    - transmission-daemon
+  config:
+    defaults_path: /etc/systemd/system
+  service:
+    state: running
+{% endload %}
