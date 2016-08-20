@@ -14,8 +14,8 @@ Available states
 .. contents::
     :local:
 
-``transmission``
+``transmission-daemon``
 -----------
 
-Deploy instances
+Deploy instances of transmission-daemon configured by pillars
 
